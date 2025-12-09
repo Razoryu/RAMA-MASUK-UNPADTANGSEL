@@ -126,17 +126,23 @@ void cariMotor(){
 }
 
 void ubahStatus(){
+    tampilkanMotor();
+    
+    if (jumlahData == 0) return;
     cin.ignore();
     string plat;
-    cout << "Masukkan plat yang ingin diubah statusnya: ";
+    cout << "\nMasukkan plat yang ingin diubah statusnya : ";
     getline(cin, plat);
 
     for(int i = 0; i < jumlahData; i++){
         if(dataMotor[i].plat == plat){
-            cout << "Status sekarang: " << dataMotor[i].status << endl;
-            cout << "Masukkan status baru (Tersedia/Disewa): ";
+            cout << "\nMotor ditemukan.\n";
+            cout << "Merk : " << dataMotor[i].merk << endl;
+            cout << "Plat : " << dataMotor[i].plat << endl;
+            cout << "Status sekarang : " << dataMotor[i].status << endl;
+            cout << "Masukkan status baru (Tersedia/Disewa) : ";
             getline(cin, dataMotor[i].status);
-            cout << "Status berhasil diubah.\n";
+            cout << "Status berhasil diubah menjadi : " << dataMotor[i].status << endl;
             return;
         }
     }
@@ -144,9 +150,12 @@ void ubahStatus(){
 }
 
 void hapusMotor(){
+    tampilkanMotor();
+    
+    if (jumlahData == 0) return;
     cin.ignore();
     string plat;
-    cout << "Masukkan plat motor yang akan dihapus: ";
+    cout << "Masukkan plat motor yang akan dihapus : ";
     getline(cin, plat);
 
     for(int i = 0; i < jumlahData; i++){
