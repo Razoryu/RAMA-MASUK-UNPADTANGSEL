@@ -1,0 +1,3 @@
+asidjasd|2|Disewa|Moge
+2|3|Disewa|Moge
+1|4|Tersedia|Moge
