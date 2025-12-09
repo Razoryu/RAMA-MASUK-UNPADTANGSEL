@@ -13,6 +13,13 @@ struct Motor{
 Motor dataMotor[200];
 int jumlahData = 0;
 
+
+void tukar(Motor &a, Motor &b){
+    Motor temp = a;
+    a = b;
+    b = temp;
+}
+
 void simpanKeFile(){
     ofstream file("rental.txt");
     for (int i = 0; i < jumlahData; i++){
@@ -74,33 +81,59 @@ void tampilkanMotor(){
 }
 
 void sortingMenu(){
-    int pilih, arah;
-    cout << "\n=== Sorting ===\n";
+    int pilih, urutan;
+    cout << "\nPilih Sortingan\n";
     cout << "1. Sort Berdasarkan Merk\n";
     cout << "2. Sort Berdasarkan Plat\n";
     cout << "3. Sort Berdasarkan Status\n";
-    cout << "Pilih: ";
+    cout << "Pilih Opsi: ";
     cin >> pilih;
 
-    cout << "Urutan:\n1. A - Z\n2. Z - A\nPilih: ";
-    cin >> arah;
-
-    for(int i = 0; i < jumlahData - 1; i++){
-        int idx = i;
-        for (int j = i + 1; j < jumlahData; j++){
-            
-            string a, b;
-            if (pilih == 1){ a = dataMotor[j].merk; b = dataMotor[idx].merk;}
-            else if (pilih == 2){ a = dataMotor[j].plat; b = dataMotor[idx].plat;}
-            else if (pilih == 3){ a = dataMotor[j].status; b = dataMotor[idx].status;}
-
-            if(arah == 1 && a < b) idx = j;
-            if(arah == 2 && a > b) idx = j;
-        }
-        swap(dataMotor[i], dataMotor[idx]);
+    if(pilih < 1 || pilih > 3){
+        cout << "Pilih antara 1, 2, dan 3";
+        return;
     }
 
-    cout << "Sorting selesai!\n";
+    cout << "Urutan: \n";
+    cout << "1. A - Z \n";
+    cout << "2. Z - A\n";
+    cout << "Pilih: ";
+    cin >> urutan;
+
+    if(urutan != 1 && urutan != 2){
+        cout << "Pilih antara 1 dan 2";
+        return;
+    }
+
+    for(int i = 0; i < jumlahData - 1; i++){
+        int indeks = i;
+        for(int j = i + 1; j < jumlahData; j++){
+            
+            string a, b;
+            if(pilih == 1){ 
+                a = dataMotor[j].merk;
+                b = dataMotor[indeks].merk;
+            }
+            else if(pilih == 2){
+                a = dataMotor[j].plat; 
+                b = dataMotor[indeks].plat;
+            }
+            else if(pilih == 3){ 
+                a = dataMotor[j].status;
+                b = dataMotor[indeks].status;
+            }
+
+            if(urutan == 1 && a < b){
+                indeks = j;
+            }
+            if(urutan == 2 && a > b){
+                indeks = j;
+            }
+                
+        }
+        tukar(dataMotor[i], dataMotor[indeks]);
+    }
+    tampilkanMotor();
 }
 
 void cariMotor(){
