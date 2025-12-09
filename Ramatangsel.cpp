@@ -182,7 +182,7 @@ void partitionMotor(){
         return;
     }
 
-    cout << "\n" << BG_BIRU << PUTIH << "   KATEGORI: MOGE (PREMIUM)               " << RESET << endl;
+    cout << "\n" << BG_BIRU << PUTIH << "   KATEGORI: MOTOR GEDE (MOGE)              " << RESET << endl;
     cout << BIRU << "--------------------------------------------------------------------------" << RESET << endl;
     cout << left << setw(25) << "Merk" << setw(15) << "Plat" << setw(15) << "Status" << endl;
     cout << BIRU << "--------------------------------------------------------------------------" << RESET << endl;
