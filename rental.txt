@@ -1,2 +1,5 @@
 1|4|Tersedia|Moge
 asidjasd|2|Disewa|Moge
+YAMAHA|B 1111 EDF|Tersedia|Biasa
+HONDA|K 5656 KNT|Disewa|Moge
+DUCATTI|B 1 RI|Disewa|Moge

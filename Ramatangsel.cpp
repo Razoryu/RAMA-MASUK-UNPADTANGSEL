@@ -41,17 +41,17 @@ int jumlahData = 0;
 
 // fungsi bantuan
 
-string toUpperCase(string str) {
-    for (int i = 0; i < str.length(); i++) {
+string toUpperCase(string str){
+    for(int i = 0; i < str.length(); i++){
         str[i] = toupper(str[i]);
     }
     return str;
 }
 
-void pauseScreen() {
+void pauseScreen(){
     cout << "\nTekan " << TEBAL << "Enter" << RESET << " untuk kembali...";
-    cin.get(); 
-    system("cls"); 
+    cin.get();
+    system("cls");
 }
 
 void headerLogo(){
@@ -68,7 +68,7 @@ void headerLogo(){
 // bagian data
 
 bool cekPlatAda(string p){
-    string pKapital = toUpperCase(p); 
+    string pKapital = toUpperCase(p);
     for(int i = 0; i < jumlahData; i++){
         if(dataMotor[i].plat == pKapital) return true;
     }
@@ -84,6 +84,7 @@ void bacaFile(){
         getline(file, tempPlat, '|');
         getline(file, tempStatus, '|');
         getline(file, tempJenis, '\n');
+
         if(tempMerk != ""){
             dataMotor[jumlahData].merk = tempMerk;
             dataMotor[jumlahData].plat = tempPlat;
@@ -100,7 +101,7 @@ void simpanDanKeluar(){
     // tulis ke file txt
     ofstream file("rental.txt");
     for (int i = 0; i < jumlahData; i++){
-        file << dataMotor[i].merk << "|" << dataMotor[i].plat << "|" 
+        file << dataMotor[i].merk << "|" << dataMotor[i].plat << "|"
              << dataMotor[i].status << "|" << dataMotor[i].jenis << "\n";
     }
     file.close();
@@ -109,7 +110,7 @@ void simpanDanKeluar(){
     cout << "\n\t" << HIJAU << "[INFO] Data berhasil disimpan/ diamankan." << RESET << endl;
     
     // delay dikit
-    Sleep(800); 
+    Sleep(800);
 
     // animasi loading bar
     system("cls");
@@ -119,9 +120,9 @@ void simpanDanKeluar(){
     cout << "\t\t\t\t";
 
     // looping buat bar
-    for (int i = 0; i < 26; i++) {
-        cout << BG_HIJAU << " " << RESET; 
-        Sleep(50); 
+    for (int i = 0; i < 26; i++){
+        cout << BG_HIJAU << " " << RESET;
+        Sleep(50);
     }
     
     // bersihin layar
@@ -155,7 +156,7 @@ void simpanDanKeluar(){
 // fungsi buat nampilin data
 
 void tampilkanMotor(){
-    if (jumlahData == 0) {
+    if (jumlahData == 0){
         cout << MERAH << "\n[INFO] Data motor masih kosong!" << RESET << endl;
         return;
     }
@@ -167,17 +168,17 @@ void tampilkanMotor(){
         // ganti moge jadi kuning
         string warnaJenis = (dataMotor[i].jenis == "Moge") ? KUNING : CYAN;
         
-        cout << left << setw(4) << i + 1 
-             << setw(25) << dataMotor[i].merk 
-             << setw(15) << dataMotor[i].plat 
-             << warnaStatus << setw(15) << dataMotor[i].status << RESET 
+        cout << left << setw(4) << i + 1
+             << setw(25) << dataMotor[i].merk
+             << setw(15) << dataMotor[i].plat
+             << warnaStatus << setw(15) << dataMotor[i].status << RESET
              << warnaJenis << setw(10) << dataMotor[i].jenis << RESET << endl;
     }
     cout << BIRU << "--------------------------------------------------------------------------" << RESET << endl;
 }
 
 void partitionMotor(){
-    if (jumlahData == 0) {
+    if (jumlahData == 0){
         cout << MERAH << "\n[INFO] Data motor masih kosong!" << RESET << endl;
         return;
     }
@@ -191,13 +192,16 @@ void partitionMotor(){
     for (int i = 0; i < jumlahData; i++){
         if (dataMotor[i].jenis == "Moge"){
             string warnaStatus = (dataMotor[i].status == "Tersedia") ? HIJAU : MERAH;
-            cout << left << setw(25) << dataMotor[i].merk 
-                 << setw(15) << dataMotor[i].plat 
+
+            cout << left << setw(25) << dataMotor[i].merk
+                 << setw(15) << dataMotor[i].plat
                  << warnaStatus << setw(15) << dataMotor[i].status << RESET << endl;
             countMoge++;
         }
     }
-    if(countMoge == 0) cout << ABU << "   (Tidak ada data Moge)" << RESET << endl;
+    if(countMoge == 0){
+        cout << ABU << "   (Tidak ada data Moge)" << RESET << endl;
+    }
 
     cout << "\n" << BG_BIRU << PUTIH << "   KATEGORI: MOTOR BIASA (REGULER)        " << RESET << endl;
     cout << BIRU << "--------------------------------------------------------------------------" << RESET << endl;
@@ -208,37 +212,47 @@ void partitionMotor(){
     for (int i = 0; i < jumlahData; i++){
         if (dataMotor[i].jenis != "Moge"){
             string warnaStatus = (dataMotor[i].status == "Tersedia") ? HIJAU : MERAH;
-            cout << left << setw(25) << dataMotor[i].merk 
-                 << setw(15) << dataMotor[i].plat 
+
+            cout << left << setw(25) << dataMotor[i].merk
+                 << setw(15) << dataMotor[i].plat
                  << warnaStatus << setw(15) << dataMotor[i].status << RESET << endl;
             countBiasa++;
         }
     }
-    if(countBiasa == 0) cout << ABU << "   (Tidak ada data Motor Biasa)" << RESET << endl;
+    if(countBiasa == 0){
+        cout << ABU << "   (Tidak ada data Motor Biasa)" << RESET << endl;
+    }
     
     cout << "\n" << ABU << "Total: " << countMoge << " Moge + " << countBiasa << " Biasa = " << jumlahData << " Motor." << RESET << endl;
 }
 
 void sortingLogic(){
     int pilih, arah;
+
     cout << "\n" << BG_KUNING << HITAM << " --- PENGATURAN SORTING --- " << RESET << endl;
     cout << CYAN << " Kategori : " << RESET << "[1] Merk   [2] Plat   [3] Status" << endl;
     cout << " Pilih    > "; cin >> pilih;
     cout << CYAN << " Urutan   : " << RESET << "[1] A-Z (Naik)   [2] Z-A (Turun)" << endl;
     cout << " Pilih    > "; cin >> arah;
-    cin.ignore(); 
+    cin.ignore();
 
     for(int i = 0; i < jumlahData - 1; i++){
         int idx = i;
         for (int j = i + 1; j < jumlahData; j++){
             string a, b;
-            if (pilih == 1){ a = dataMotor[j].merk; b = dataMotor[idx].merk;}
-            else if (pilih == 2){ a = dataMotor[j].plat; b = dataMotor[idx].plat;}
-            else { a = dataMotor[j].status; b = dataMotor[idx].status;} 
+            if (pilih == 1){
+                a = dataMotor[j].merk; b = dataMotor[idx].merk;
+            }
+            else if (pilih == 2){
+                a = dataMotor[j].plat; b = dataMotor[idx].plat;
+            }
+            else {
+                a = dataMotor[j].status; b = dataMotor[idx].status;
+            }
             
             if((arah == 1 && a < b) || (arah == 2 && a > b)) idx = j;
         }
-        swap(dataMotor[i], dataMotor[idx]); 
+        swap(dataMotor[i], dataMotor[idx]);
     }
     cout << HIJAU << "\n Sorting selesai! Tampilan diperbarui." << RESET;
 }
@@ -246,7 +260,7 @@ void sortingLogic(){
 // menu menu
 
 void menuLihatLaporan(){
-    int displayMode = 1; 
+    int displayMode = 1;
     bool stay = true;
 
     while(stay){
@@ -256,7 +270,8 @@ void menuLihatLaporan(){
         if(displayMode == 1){
             cout << KUNING << "MODE: TABEL DATA STANDAR (SEMUA)" << RESET << endl;
             tampilkanMotor();
-        } else {
+        } 
+        else{
             partitionMotor();
         }
 
@@ -271,13 +286,14 @@ void menuLihatLaporan(){
         
         if(cin >> subPilih){
             switch(subPilih){
-                case 1: sortingLogic(); break; 
+                case 1: sortingLogic(); break;
                 case 2: displayMode = 2; break;
                 case 3: displayMode = 1; break;
                 case 4: stay = false; break;
                 default: cout << MERAH << "Pilihan tidak ada." << RESET;
             }
-        } else {
+        }
+        else{
             cin.clear(); cin.ignore(1000, '\n');
             stay = false;
         }
@@ -287,44 +303,72 @@ void menuLihatLaporan(){
 // operasi utama
 
 void tambahMotor(){
-    bool tambahLagi = true; 
-    cin.ignore(); 
+    bool tambahLagi = true;
+    cin.ignore();
 
-    while(tambahLagi) {
-        system("cls"); 
-        headerLogo(); 
+    while(tambahLagi){
+        system("cls");
+        headerLogo();
         cout << "\n" << BG_HIJAU << HITAM << " --- FORM TAMBAH DATA --- " << RESET << endl;
 
-        do {
-            cout << CYAN << "Masukkan Merk (Max 22 char) : " << RESET; 
+        do{
+            cout << CYAN << "Masukkan Merk (Max 22 char) : " << RESET;
             getline(cin, dataMotor[jumlahData].merk);
-            if(dataMotor[jumlahData].merk.empty()) cout << MERAH << "[ERROR] Wajib diisi!\n" << RESET;
-            else if(dataMotor[jumlahData].merk.length() > 22) { cout << MERAH << "[ERROR] Kepanjangan!\n" << RESET; dataMotor[jumlahData].merk = ""; }
+
+            if(dataMotor[jumlahData].merk.empty()){
+                cout << MERAH << "[ERROR] Wajib diisi!\n" << RESET;
+            }
+
+            else if(dataMotor[jumlahData].merk.length() > 22){
+                cout << MERAH << "[ERROR] Kepanjangan!\n" << RESET; dataMotor[jumlahData].merk = "";
+            }
         } while (dataMotor[jumlahData].merk.empty());
 
         while(true){
-            string inputPlat; 
-            cout << CYAN << "Masukkan Plat (Max 12 char) : " << RESET; 
+            string inputPlat;
+            cout << CYAN << "Masukkan Plat (Max 12 char) : " << RESET;
             getline(cin, inputPlat);
             inputPlat = toUpperCase(inputPlat);
-            if(inputPlat.empty()) cout << MERAH << "[ERROR] Wajib diisi!\n" << RESET;
-            else if(inputPlat.length() > 12) cout << MERAH << "[ERROR] Kepanjangan!\n" << RESET;
-            else if(cekPlatAda(inputPlat)) cout << MERAH << "[ERROR] Plat sudah ada!\n" << RESET;
-            else { dataMotor[jumlahData].plat = inputPlat; break; }
+
+            if(inputPlat.empty()){
+                cout << MERAH << "[ERROR] Wajib diisi!\n" << RESET;
+            }
+
+            else if(inputPlat.length() > 12){
+                cout << MERAH << "[ERROR] Kepanjangan!\n" << RESET;
+            }
+
+            else if(cekPlatAda(inputPlat)){
+            cout << MERAH << "[ERROR] Plat sudah ada!\n" << RESET;
+            }
+
+            else {
+                dataMotor[jumlahData].plat = inputPlat; break;
+            }
         }
 
         int pil;
-        while(true){ 
-            cout << CYAN << "Status (" << BG_HIJAU << " 1.Tersedia " << RESET << " / " << BG_MERAH << " 2.Disewa " << RESET << CYAN << ")   : " << RESET; 
-            if(cin >> pil && (pil==1||pil==2)){ dataMotor[jumlahData].status = (pil==1)?"Tersedia":"Disewa"; cin.ignore(); break; } 
-            cin.clear(); cin.ignore(1000,'\n'); cout << MERAH << "Pilih 1 atau 2!\n" << RESET; 
+        while(true){
+            cout << CYAN << "Status (" << BG_HIJAU << " 1.Tersedia " << RESET << " / " << BG_MERAH << " 2.Disewa " << RESET << CYAN << ")   : " << RESET;
+            if(cin >> pil && (pil==1||pil==2)){
+                dataMotor[jumlahData].status = (pil==1)?"Tersedia":"Disewa"; cin.ignore(); break;
+            }
+
+            cin.clear();
+            cin.ignore(1000,'\n');
+            cout << MERAH << "Pilih 1 atau 2!\n" << RESET;
         }
         
         while(true){ 
             // ganti warna moge jadi kuning background
-            cout << CYAN << "Jenis  (" << BG_KUNING << HITAM << " 1.Moge " << RESET << " / " << BG_CYAN << " 2.Biasa " << RESET << CYAN << ")       : " << RESET; 
-            if(cin >> pil && (pil==1||pil==2)){ dataMotor[jumlahData].jenis = (pil==1)?"Moge":"Biasa"; cin.ignore(); break; } 
-            cin.clear(); cin.ignore(1000,'\n'); cout << MERAH << "Pilih 1 atau 2!\n" << RESET; 
+            cout << CYAN << "Jenis  (" << BG_KUNING << HITAM << " 1.Moge " << RESET << " / " << BG_CYAN << " 2.Biasa " << RESET << CYAN << ")       : " << RESET;
+            if(cin >> pil && (pil==1||pil==2)){
+                dataMotor[jumlahData].jenis = (pil==1)?"Moge":"Biasa"; cin.ignore(); break;
+            }
+
+            cin.clear();
+            cin.ignore(1000,'\n');
+            cout << MERAH << "Pilih 1 atau 2!\n" << RESET;
         }
 
         jumlahData++;
@@ -339,18 +383,24 @@ void tambahMotor(){
         int konfirmasi;
         while(true){
             if(cin >> konfirmasi){
-                if(konfirmasi == 1){ tambahLagi = true; cin.ignore(); break; } 
-                else if(konfirmasi == 2){ tambahLagi = false; cin.ignore(); break; }
+                if(konfirmasi == 1){
+                    tambahLagi = true; cin.ignore(); break;
+                }
+
+                else if(konfirmasi == 2){
+                    tambahLagi = false; cin.ignore(); break;
+                }
             }
             cout << MERAH << "Pilih 1 atau 2: " << RESET;
-            cin.clear(); cin.ignore(1000, '\n');
+            cin.clear();
+            cin.ignore(1000, '\n');
         }
     }
 }
 
 void ubahStatus(){
     bool editLagi = true;
-    cin.ignore(); 
+    cin.ignore();
 
     while(editLagi){
         system("cls");
@@ -358,10 +408,10 @@ void ubahStatus(){
         cout << "\n" << BG_KUNING << HITAM << " --- FORM UBAH STATUS --- " << RESET << endl;
         
         tampilkanMotor();
-        if (jumlahData == 0) { 
-            cout << MERAH << "Data Kosong. Tekan Enter kembali..." << RESET; 
-            cin.get(); 
-            return; 
+        if (jumlahData == 0){
+            cout << MERAH << "Data Kosong. Tekan Enter kembali..." << RESET;
+            cin.get();
+            return;
         }
 
         string plat;
@@ -370,30 +420,39 @@ void ubahStatus(){
         while(!found){
             cout << "\n" << CYAN << "Masukkan Plat Motor (Ketik " << MERAH << "0" << CYAN << " untuk batal): " << RESET; 
             getline(cin, plat);
-            if(plat == "0") return; 
+
+            if(plat == "0") return;
             plat = toUpperCase(plat);
             
             for(int i = 0; i < jumlahData; i++){
                 if(dataMotor[i].plat == plat){
                     found = true;
+
                     cout << "\n" << BIRU << "--------------------------------------------------" << RESET << endl;
                     cout << " Motor Ditemukan : " << KUNING << dataMotor[i].merk << RESET << endl;
                     cout << " Status Saat Ini : " << (dataMotor[i].status == "Tersedia" ? HIJAU : MERAH) << dataMotor[i].status << RESET << endl;
                     cout << BIRU << "--------------------------------------------------" << RESET << endl;
                     
                     int pil;
-                    while(true){ 
-                        cout << CYAN << "Ubah Menjadi (" << BG_HIJAU << " 1.Tersedia " << RESET << " / " << BG_MERAH << " 2.Disewa " << RESET << CYAN << ") : " << RESET; 
-                        if(cin >> pil && (pil==1||pil==2)){ 
-                            dataMotor[i].status = (pil==1)?"Tersedia":"Disewa"; 
-                            cin.ignore(); 
+                    while(true){
+                        cout << CYAN << "Ubah Menjadi (" << BG_HIJAU << " 1.Tersedia " << RESET << " / " << BG_MERAH << " 2.Disewa " << RESET << CYAN << ") : " << RESET;
+
+                        if(cin >> pil && (pil==1||pil==2)){
+                            dataMotor[i].status = (pil==1)?"Tersedia":"Disewa";
+                            cin.ignore();
                             cout << "\n" << HIJAU << "[SUKSES] Status berhasil diupdate menjadi: " << dataMotor[i].status << RESET << endl;
-                            break; 
-                        } cin.clear(); cin.ignore(1000,'\n'); cout << MERAH << " [ERROR] Masukkan angka 1 atau 2!" << RESET << endl;
+                            break;
+                        }
+
+                        cin.clear();
+                        cin.ignore(1000,'\n');
+                        cout << MERAH << " [ERROR] Masukkan angka 1 atau 2!" << RESET << endl;
                     }
                 }
             }
-            if(!found) cout << MERAH << " [ERROR] Plat nomor tidak ditemukan. Cek lagi tabel di atas." << RESET << endl;
+            if(!found){
+                cout << MERAH << " [ERROR] Plat nomor tidak ditemukan. Cek lagi tabel di atas." << RESET << endl;
+            }
         }
 
         cout << "\n============================================\n";
@@ -405,10 +464,17 @@ void ubahStatus(){
         int konfirmasi;
         while(true){
             if(cin >> konfirmasi){
-                if(konfirmasi == 1){ editLagi = true; cin.ignore(); break; } 
-                else if(konfirmasi == 2){ editLagi = false; cin.ignore(); break; }
+                if(konfirmasi == 1){
+                    editLagi = true; cin.ignore(); break;
+                }
+
+                else if(konfirmasi == 2){
+                    editLagi = false; cin.ignore(); break;
+                }
             }
-            cout << MERAH << "Pilih 1 atau 2: " << RESET; cin.clear(); cin.ignore(1000, '\n');
+            cout << MERAH << "Pilih 1 atau 2: " << RESET;
+            cin.clear();
+            cin.ignore(1000, '\n');
         }
     }
 }
@@ -420,10 +486,11 @@ void hapusMotor(){
     while(hapusLagi){
         system("cls");
         headerLogo();
+
         cout << "\n" << BG_MERAH << PUTIH << " --- FORM HAPUS DATA MOTOR --- " << RESET << endl;
 
         tampilkanMotor();
-        if (jumlahData == 0) {
+        if (jumlahData == 0){
             cout << MERAH << "Data Kosong. Tekan Enter kembali..." << RESET;
             cin.get();
             return;
@@ -433,7 +500,7 @@ void hapusMotor(){
         cout << "\n" << CYAN << "Masukkan Plat yang akan DIHAPUS (Ketik " << MERAH << "0" << CYAN << " untuk batal): " << RESET;
         getline(cin, plat);
 
-        if(plat == "0") return; 
+        if(plat == "0") return;
 
         plat = toUpperCase(plat);
         bool found = false;
@@ -452,7 +519,7 @@ void hapusMotor(){
                 char yakin;
                 cout << BG_MERAH << PUTIH << " YAKIN INGIN MENGHAPUS PERMANEN? " << RESET << " (" << HIJAU << "y" << RESET << "/" << MERAH << "n" << RESET << ") : ";
                 cin >> yakin;
-                cin.ignore(); 
+                cin.ignore();
 
                 if(yakin == 'y' || yakin == 'Y'){
                     for(int j = i; j < jumlahData - 1; j++){
@@ -463,13 +530,15 @@ void hapusMotor(){
                     system("cls");
                     headerLogo();
                     cout << "\n" << BG_MERAH << PUTIH << " --- FORM HAPUS DATA MOTOR --- " << RESET << endl;
-                    tampilkanMotor(); 
+                    tampilkanMotor();
                     
                     cout << "\n" << HIJAU << "[SUKSES] Data motor berhasil dihapus dari sistem." << RESET << endl;
-                } else {
+                }
+
+                else{
                     cout << "\n" << KUNING << "[INFO] Penghapusan dibatalkan." << RESET << endl;
                 }
-                break; 
+                break;
             }
         }
 
@@ -484,19 +553,25 @@ void hapusMotor(){
         
         cout << "\nPilihan > ";
         int konfirmasi;
+
         while(true){
             if(cin >> konfirmasi){
-                if(konfirmasi == 1){ hapusLagi = true; cin.ignore(); break; } 
-                else if(konfirmasi == 2){ hapusLagi = false; cin.ignore(); break; }
+                if(konfirmasi == 1){ hapusLagi = true; cin.ignore(); break;
+                }
+
+                else if(konfirmasi == 2){ hapusLagi = false; cin.ignore(); break;
+                }
             }
-            cin.clear(); cin.ignore(1000, '\n'); cout << MERAH << "Pilih 1 atau 2: " << RESET;
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << MERAH << "Pilih 1 atau 2: " << RESET;
         }
     }
 }
 
 void cariMotor(){
     bool cariLagi = true;
-    cin.ignore(); 
+    cin.ignore();
 
     while(cariLagi){
         system("cls");
@@ -520,7 +595,7 @@ void cariMotor(){
             string s = toUpperCase(dataMotor[i].status);
             string j = toUpperCase(dataMotor[i].jenis);
 
-            if(m.find(keyword) != string::npos || p.find(keyword) != string::npos || s.find(keyword) != string::npos || j.find(keyword) != string::npos) {
+            if(m.find(keyword) != string::npos || p.find(keyword) != string::npos || s.find(keyword) != string::npos || j.find(keyword) != string::npos){
                 string warnaStatus = (dataMotor[i].status == "Tersedia") ? HIJAU : MERAH;
                 // mosenya juga kuning
                 string warnaJenis = (dataMotor[i].jenis == "Moge") ? KUNING : CYAN;
@@ -530,8 +605,12 @@ void cariMotor(){
         }
         cout << BIRU << "--------------------------------------------------------------------------" << RESET << endl;
 
-        if(countFound > 0) cout << HIJAU << "Ditemukan " << countFound << " data yang cocok." << RESET << endl;
-        else cout << MERAH << "Tidak ada data yang cocok dengan kata kunci: " << keyword << RESET << endl;
+        if(countFound > 0){
+            cout << HIJAU << "Ditemukan " << countFound << " data yang cocok." << RESET << endl;
+        }
+        else{
+            cout << MERAH << "Tidak ada data yang cocok dengan kata kunci: " << keyword << RESET << endl;
+        }
 
         cout << "\n" << BIRU << "==========================================================================" << RESET << endl;
         cout << "                        " << KUNING << "INGIN MENCARI DATA LAIN?" << RESET << endl;
@@ -542,10 +621,14 @@ void cariMotor(){
         int konfirmasi;
         while(true){
             if(cin >> konfirmasi){
-                if(konfirmasi == 1){ cariLagi = true; cin.ignore(); break; } 
-                else if(konfirmasi == 2){ cariLagi = false; cin.ignore(); break; }
+                if(konfirmasi == 1){ cariLagi = true; cin.ignore(); break;
+                }
+                else if(konfirmasi == 2){ cariLagi = false; cin.ignore(); break;
+                }
             }
-            cout << MERAH << "Pilih 1 atau 2: " << RESET; cin.clear(); cin.ignore(1000, '\n');
+            cout << MERAH << "Pilih 1 atau 2: " << RESET;
+            cin.clear();
+            cin.ignore(1000, '\n');
         }
     }
 }
@@ -553,13 +636,13 @@ void cariMotor(){
 // dashboard utama
 
 int main(){
-    system("color 07"); 
+    system("color 07");
     bacaFile();
 
     int pilih;
     do{
-        system("cls"); 
-        headerLogo(); 
+        system("cls");
+        headerLogo();
 
         cout << "  " << BG_BIRU << PUTIH << " [1] TAMBAH DATA BARU " << RESET << "\t\t" << BG_BIRU << PUTIH << " [4] CARI MOTOR       " << RESET << endl;
         cout << "\n";
@@ -570,15 +653,19 @@ int main(){
         cout << BIRU << "\n==========================================================================\n" << RESET;
         cout << "Pilih Menu " << KUNING << "[1-6]" << RESET << ": ";
 
-        if (!(cin >> pilih)) { cout << MERAH << "Input Error!\n" << RESET; cin.clear(); cin.ignore(1000, '\n'); continue; }
+        if (!(cin >> pilih)){
+            cout << MERAH << "Input Error!\n" << RESET;
+            cin.clear(); cin.ignore(1000, '\n');
+            continue;
+        }
 
         switch (pilih){
             case 1: tambahMotor(); break;
-            case 2: menuLihatLaporan(); break; 
+            case 2: menuLihatLaporan(); break;
             case 3: ubahStatus(); break;
             case 4: cariMotor(); break;
             case 5: hapusMotor(); break;
-            case 6: simpanDanKeluar(); return 0; 
+            case 6: simpanDanKeluar(); return 0;
             default: cout << MERAH << "Pilihan salah.\n" << RESET; pauseScreen();
         }
     } while(pilih != 6);
