@@ -2,3 +2,4 @@ HONDA|K 5656 KNT|Disewa|Moge
 HONDA|B 1111 KLM|Tersedia|Biasa
 YAMAHA|B 1111 EDF|Tersedia|Biasa
 DUCATTI|B 1 RI|Disewa|Moge
+2|3|Disewa|Biasa
